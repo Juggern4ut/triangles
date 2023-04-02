@@ -9,6 +9,26 @@
     <link rel="stylesheet" href="./css/main.css" />
   </head>
   <body>
-    <canvas width="1000" height="1000" id="game"></canvas>
+    <section class="controls">
+      <div>
+        <label>Particle Amount</label>
+        <input type="range" min="1" value="30" max="100" id="particles" />
+      </div>
+      <div>
+        <label>Connecting Distance</label>
+        <input
+          type="range"
+          min="20"
+          value="30"
+          max="500"
+          id="connectDistance"
+        />
+      </div>
+      <div>
+        <label>Hue</label>
+        <input type="range" min="0" value="180" max="359" id="hue" />
+      </div>
+    </section>
+    <canvas id="game"></canvas>
   </body>
 </html>
