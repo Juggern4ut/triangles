@@ -10,13 +10,17 @@ const ctx = canvas.getContext("2d");
 const particles = [];
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-const width = canvas.width;
-const height = canvas.height;
+let width = canvas.width;
+let height = canvas.height;
 const particlesDom = document.querySelector("#particles");
 let particleAmount = parseInt(particlesDom.value);
 const distDom = document.querySelector("#connectDistance");
 const hueDom = document.querySelector("#hue");
 let lastRender = 0;
+window.addEventListener("resize", (e) => {
+    width = window.innerWidth;
+    height = window.innerHeight;
+});
 /**
  * The main game loop
  */
