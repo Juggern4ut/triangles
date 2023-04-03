@@ -5,6 +5,18 @@ const canvas = document.querySelector("#game") as HTMLCanvasElement;
 const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
 const particles: Particle[] = [];
 
+const particlesDom = document.querySelector("#particles") as HTMLInputElement;
+let particleAmount = parseInt(particlesDom.value);
+
+const distDom = document.querySelector("#connectDistance") as HTMLInputElement;
+const hueDom = document.querySelector("#hue") as HTMLInputElement;
+const speedDom = document.querySelector("#speed") as HTMLInputElement;
+
+const infoLabel = document.querySelector("#infos") as HTMLSpanElement;
+
+const openHelp = document.querySelector("#openHelp");
+const help = document.querySelector("#help");
+
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
@@ -15,17 +27,6 @@ let touchX = 0;
 let touchY = 0;
 
 let timeout = 0;
-
-const particlesDom = document.querySelector("#particles") as HTMLInputElement;
-let particleAmount = parseInt(particlesDom.value);
-
-const distDom = document.querySelector("#connectDistance") as HTMLInputElement;
-const hueDom = document.querySelector("#hue") as HTMLInputElement;
-
-const infoLabel = document.querySelector("#infos") as HTMLSpanElement;
-
-const openHelp = document.querySelector("#openHelp");
-const help = document.querySelector("#help");
 
 let lastRender = 0;
 
@@ -54,7 +55,8 @@ const loop = (timestamp: number) => {
 const update = (progress: number) => {
   updateLinesBySlider();
   particles.forEach((p) => {
-    p.update(progress, width, height);
+    const delta = progress * (parseInt(speedDom.value) / 100);
+    p.update(delta, width, height);
   });
 };
 
@@ -94,6 +96,10 @@ const initTouchHandles = () => {
       const newParticles = parseInt(particlesDom.value) + deltaX;
       particlesDom.value = newParticles.toString();
       showInfos(`Particles: ${particlesDom.value}`);
+    } else if (e.touches[0].clientY >= canvas.height - 200) {
+      const newSpeed = parseInt(speedDom.value) + deltaX;
+      speedDom.value = newSpeed.toString();
+      showInfos(`Speed: ${speedDom.value}`);
     } else if (e.touches[0].clientX <= 100) {
       const newHue = parseInt(hueDom.value) + deltaY;
       hueDom.value = newHue.toString();

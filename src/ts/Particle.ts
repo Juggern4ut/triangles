@@ -14,8 +14,6 @@ export default class Particle {
    * @param progress deltatime since the last frame draw
    */
   update(progress: number, width: number, height: number): void {
-    progress *= 0.15;
-
     if (this.position.x <= 0 || this.position.x >= width) {
       this.direction.multiply(new Vector2D(-1, 1));
     }
