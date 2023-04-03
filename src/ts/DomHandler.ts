@@ -10,9 +10,9 @@ export default class DomHandler {
 
   canvas: HTMLCanvasElement;
 
-  touchX: number = 0;
-  touchY: number = 0;
-  timeout: number = 0;
+  touchX = 0;
+  touchY = 0;
+  timeout = 0;
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;

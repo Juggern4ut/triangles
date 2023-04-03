@@ -7,7 +7,7 @@ export default class Simulation {
   ctx: CanvasRenderingContext2D;
   particles: Particle[] = [];
   domHandler: DomHandler;
-  lastRender: number = 0;
+  lastRender = 0;
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;

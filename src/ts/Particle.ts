@@ -30,7 +30,7 @@ export default class Particle {
   }
 
   /**
-   * Puts the particle back into the canvas if it happens 
+   * Puts the particle back into the canvas if it happens
    * to go out of bounds somehow
    * @param width The width of the canvas
    * @param height The height of the canvas
