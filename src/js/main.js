@@ -62,6 +62,9 @@ const draw = () => {
         p.draw(ctx, "rgba(255, 255, 255, 0.6)");
     });
 };
+/**
+ * Initializes the controls for touch devices
+ */
 const initTouchHandles = () => {
     canvas.addEventListener("touchstart", (e) => {
         touchX = e.touches[0].clientX;
@@ -156,6 +159,10 @@ const addParticles = (amount) => {
         particles.push(new Particle_1.default(new Vector2D_1.default(Math.random() * width, Math.random() * height), new Vector2D_1.default(Math.random() * 2 - 1, Math.random() * 2 - 1)));
     }
 };
+/**
+ * Shows a infotext that will fade out after 500ms
+ * @param text The text to display
+ */
 const showInfos = (text) => {
     infoLabel.innerHTML = text;
     infoLabel.classList.add("visible");
