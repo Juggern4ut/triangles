@@ -24,6 +24,27 @@ class Particle {
         const factor = new Vector2D_1.default(progress, progress);
         tmp.multiply(factor);
         this.position.add(tmp);
+        this.resetPosition(width, height);
+    }
+    /**
+     * Puts the particle back into the canvas if it happens
+     * to go out of bounds somehow
+     * @param width The width of the canvas
+     * @param height The height of the canvas
+     */
+    resetPosition(width, height) {
+        if (this.position.x < 0) {
+            this.position.x = 0;
+        }
+        else if (this.position.x > width) {
+            this.position.x = width;
+        }
+        if (this.position.y < 0) {
+            this.position.y = 0;
+        }
+        else if (this.position.y > height) {
+            this.position.y = height;
+        }
     }
     /**
      * Draws the Particle unto a given canvas
