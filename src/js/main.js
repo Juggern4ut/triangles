@@ -12,10 +12,16 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 let width = canvas.width;
 let height = canvas.height;
+let touchX = 0;
+let touchY = 0;
+let timeout = 0;
 const particlesDom = document.querySelector("#particles");
 let particleAmount = parseInt(particlesDom.value);
 const distDom = document.querySelector("#connectDistance");
 const hueDom = document.querySelector("#hue");
+const infoLabel = document.querySelector("#infos");
+const openHelp = document.querySelector("#openHelp");
+const help = document.querySelector("#help");
 let lastRender = 0;
 window.addEventListener("resize", (e) => {
     width = window.innerWidth;
@@ -54,6 +60,50 @@ const draw = () => {
             }
         });
         p.draw(ctx, "rgba(255, 255, 255, 0.6)");
+    });
+};
+const initTouchHandles = () => {
+    canvas.addEventListener("touchstart", (e) => {
+        touchX = e.touches[0].clientX;
+        touchY = e.touches[0].clientY;
+    });
+    canvas.addEventListener("touchmove", (e) => {
+        const deltaX = e.touches[0].clientX - touchX;
+        const deltaY = touchY - e.touches[0].clientY;
+        touchX = e.touches[0].clientX;
+        touchY = e.touches[0].clientY;
+        if (e.touches[0].clientY >= canvas.height - 100) {
+            const newParticles = parseInt(particlesDom.value) + deltaX;
+            particlesDom.value = newParticles.toString();
+            showInfos(`Particles: ${particlesDom.value}`);
+        }
+        else if (e.touches[0].clientX <= 100) {
+            const newHue = parseInt(hueDom.value) + deltaY;
+            hueDom.value = newHue.toString();
+            showInfos(`Hue: ${hueDom.value}`);
+        }
+        else if (e.touches[0].clientX >= canvas.width - 100) {
+            const newDistance = parseInt(distDom.value) + deltaY;
+            distDom.value = newDistance.toString();
+            showInfos(`Distance: ${distDom.value}`);
+        }
+    });
+};
+/**
+ * Initializes the controls to open the help view
+ */
+const initOpenHelp = () => {
+    openHelp === null || openHelp === void 0 ? void 0 : openHelp.addEventListener("click", (e) => {
+        if (openHelp.classList.contains("open")) {
+            openHelp.innerHTML = "?";
+            openHelp === null || openHelp === void 0 ? void 0 : openHelp.classList.remove("open");
+            help === null || help === void 0 ? void 0 : help.classList.remove("open");
+        }
+        else {
+            openHelp.innerHTML = "X";
+            openHelp === null || openHelp === void 0 ? void 0 : openHelp.classList.add("open");
+            help === null || help === void 0 ? void 0 : help.classList.add("open");
+        }
     });
 };
 /**
@@ -106,6 +156,16 @@ const addParticles = (amount) => {
         particles.push(new Particle_1.default(new Vector2D_1.default(Math.random() * width, Math.random() * height), new Vector2D_1.default(Math.random() * 2 - 1, Math.random() * 2 - 1)));
     }
 };
+const showInfos = (text) => {
+    infoLabel.innerHTML = text;
+    infoLabel.classList.add("visible");
+    clearTimeout(timeout);
+    timeout = window.setTimeout(() => {
+        infoLabel.classList.remove("visible");
+    }, 500);
+};
 window.requestAnimationFrame(loop);
 addParticles(particleAmount);
+initTouchHandles();
+initOpenHelp();
 //# sourceMappingURL=main.js.map

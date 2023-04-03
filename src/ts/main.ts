@@ -11,11 +11,21 @@ canvas.height = window.innerHeight;
 let width = canvas.width;
 let height = canvas.height;
 
+let touchX = 0;
+let touchY = 0;
+
+let timeout = 0;
+
 const particlesDom = document.querySelector("#particles") as HTMLInputElement;
 let particleAmount = parseInt(particlesDom.value);
 
 const distDom = document.querySelector("#connectDistance") as HTMLInputElement;
 const hueDom = document.querySelector("#hue") as HTMLInputElement;
+
+const infoLabel = document.querySelector("#infos") as HTMLSpanElement;
+
+const openHelp = document.querySelector("#openHelp");
+const help = document.querySelector("#help");
 
 let lastRender = 0;
 
@@ -61,6 +71,52 @@ const draw = () => {
       }
     });
     p.draw(ctx, "rgba(255, 255, 255, 0.6)");
+  });
+};
+
+const initTouchHandles = () => {
+  canvas.addEventListener("touchstart", (e) => {
+    touchX = e.touches[0].clientX;
+    touchY = e.touches[0].clientY;
+  });
+
+  canvas.addEventListener("touchmove", (e) => {
+    const deltaX = e.touches[0].clientX - touchX;
+    const deltaY = touchY - e.touches[0].clientY;
+
+    touchX = e.touches[0].clientX;
+    touchY = e.touches[0].clientY;
+
+    if (e.touches[0].clientY >= canvas.height - 100) {
+      const newParticles = parseInt(particlesDom.value) + deltaX;
+      particlesDom.value = newParticles.toString();
+      showInfos(`Particles: ${particlesDom.value}`);
+    } else if (e.touches[0].clientX <= 100) {
+      const newHue = parseInt(hueDom.value) + deltaY;
+      hueDom.value = newHue.toString();
+      showInfos(`Hue: ${hueDom.value}`);
+    } else if (e.touches[0].clientX >= canvas.width - 100) {
+      const newDistance = parseInt(distDom.value) + deltaY;
+      distDom.value = newDistance.toString();
+      showInfos(`Distance: ${distDom.value}`);
+    }
+  });
+};
+
+/**
+ * Initializes the controls to open the help view
+ */
+const initOpenHelp = () => {
+  openHelp?.addEventListener("click", (e) => {
+    if (openHelp.classList.contains("open")) {
+      openHelp.innerHTML = "?";
+      openHelp?.classList.remove("open");
+      help?.classList.remove("open");
+    } else {
+      openHelp.innerHTML = "X";
+      openHelp?.classList.add("open");
+      help?.classList.add("open");
+    }
   });
 };
 
@@ -124,5 +180,16 @@ const addParticles = (amount: number) => {
   }
 };
 
+const showInfos = (text: string) => {
+  infoLabel.innerHTML = text;
+  infoLabel.classList.add("visible");
+  clearTimeout(timeout);
+  timeout = window.setTimeout(() => {
+    infoLabel.classList.remove("visible");
+  }, 500);
+};
+
 window.requestAnimationFrame(loop);
 addParticles(particleAmount);
+initTouchHandles();
+initOpenHelp();

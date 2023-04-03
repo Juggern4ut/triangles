@@ -10,24 +10,16 @@
   </head>
   <body>
     <section class="controls">
-      <div>
-        <label>Particle Amount</label>
-        <input type="range" min="1" value="30" max="100" id="particles" />
-      </div>
-      <div>
-        <label>Connecting Distance</label>
-        <input
-          type="range"
-          min="20"
-          value="30"
-          max="500"
-          id="connectDistance"
-        />
-      </div>
-      <div>
-        <label>Hue</label>
-        <input type="range" min="0" value="180" max="359" id="hue" />
-      </div>
+      <input type="range" min="1" value="30" max="100" id="particles" />
+      <input type="range" min="20" value="100" max="500" id="connectDistance" />
+      <input type="range" min="0" value="180" max="359" id="hue" />
+    </section>
+    <span id="infos"></span>
+    <span id="openHelp">?</span>
+    <section id="help">
+      <div class="hue"><span>Hue</span></div>
+      <div class="amount"><span>Distance</span></div>
+      <div class="particles"><span>Particles</span></div>
     </section>
     <canvas id="game"></canvas>
   </body>
