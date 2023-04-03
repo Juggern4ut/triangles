@@ -86,7 +86,7 @@ const initTouchHandles = () => {
   });
 
   canvas.addEventListener("touchmove", (e) => {
-    const deltaX = e.touches[0].clientX - touchX;
+    const deltaX = (e.touches[0].clientX - touchX) * 0.2;
     const deltaY = touchY - e.touches[0].clientY;
 
     touchX = e.touches[0].clientX;
