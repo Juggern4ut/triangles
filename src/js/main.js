@@ -23,7 +23,7 @@ const infoLabel = document.querySelector("#infos");
 const openHelp = document.querySelector("#openHelp");
 const help = document.querySelector("#help");
 let lastRender = 0;
-window.addEventListener("resize", (e) => {
+window.addEventListener("resize", () => {
     width = window.innerWidth;
     height = window.innerHeight;
 });
@@ -93,7 +93,7 @@ const initTouchHandles = () => {
  * Initializes the controls to open the help view
  */
 const initOpenHelp = () => {
-    openHelp === null || openHelp === void 0 ? void 0 : openHelp.addEventListener("click", (e) => {
+    openHelp === null || openHelp === void 0 ? void 0 : openHelp.addEventListener("click", () => {
         if (openHelp.classList.contains("open")) {
             openHelp.innerHTML = "?";
             openHelp === null || openHelp === void 0 ? void 0 : openHelp.classList.remove("open");
